@@ -1,0 +1,144 @@
+import { fixmoneyDesimal } from "./money.js";
+import { cart,saveIntoLocal} from "../data/cart.js";
+import { products,getProduct } from "../data/products.js";
+import { deliveryOptions } from "../data/deliveryOptions.js";
+import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
+
+
+export function updateCheckoutItem() {
+  let total = 0;
+
+  let totalPriceCents = 0;
+
+  let totalDeliveryCostCents = 0;
+  cart.forEach((item) => {
+    total += item.quantity;
+
+    const product = products.find((P) => P.id === item.id);
+
+    if (product) {
+      totalPriceCents += item.quantity * product.priceCents;
+    }
+
+    let checkedRadio = document.querySelector(
+      `input[name="delivery-option-${item.id}"]:checked`,
+    );
+
+    if (checkedRadio) {
+      totalDeliveryCostCents += Number(checkedRadio.value);
+    }
+  });
+
+  document.querySelectorAll(".total-items-in-cart").forEach((text) => {
+    text.innerText = total;
+  });
+
+  let totalMoneyBeforeTax = totalPriceCents + totalDeliveryCostCents;
+  let EstimatedTax = totalMoneyBeforeTax * 0.1;
+  let totalMoneyAfterTax = totalMoneyBeforeTax + EstimatedTax;
+
+  const updataTaxt = (slector,value)=>{
+    const HTMltag = document.querySelector(slector);
+    if(HTMltag){
+      HTMltag.innerText = fixmoneyDesimal(value);
+    }
+    else{
+      console.error(`not found ${slector} `);
+    }
+  }
+   
+  updataTaxt(".totalItemsPrice",totalPriceCents);
+  updataTaxt(".totalShipingCost",totalDeliveryCostCents);
+  updataTaxt(".totalMoneyBeforeTax",totalMoneyBeforeTax);
+  updataTaxt(".EstimatedTax",EstimatedTax);
+  updataTaxt(".totalMoneyAfterTax",totalMoneyAfterTax);
+
+//   after calculate then save it inot local
+  saveIntoLocal();
+
+}
+
+
+  let carthtml='';
+  cart.forEach((item)=>{
+   const prodcut = getProduct(item);
+
+    carthtml+=`<div class="cart-item-container">
+            <div class="delivery-date">
+              Delivery date: Wednesday, June 15
+            </div>
+
+            <div class="cart-item-details-grid">
+              <img class="product-image"
+                src="${prodcut.image}">
+
+              <div class="cart-item-details">
+                <div class="product-name">
+                  ${prodcut.name}
+                </div>
+                <div class="product-price">
+                  ${prodcut.priceCents}
+                </div>
+                <div class="product-quantity">
+                  <span>
+                    Quantity: <span class="quantity-label">${item.quantity}</span>
+                  </span>
+                  <span class="update-quantity-link link-primary">
+                    Update
+                  </span>
+                  <span class="delete-quantity-link link-primary">
+                    Delete
+                  </span>
+                </div>
+              </div>
+
+              <div class="delivery-options">
+                <div class="delivery-options-title">
+                  Choose a delivery option:
+                </div>
+
+                <div class="delivery-option">
+                  <input type="radio" class="delivery-option-input"
+                    name="delivery-option-${prodcut.id}">
+                  <div>
+                    <div class="delivery-option-date">
+                      Tuesday, June 21
+                    </div>
+                    <div class="delivery-option-price">
+                      FREE Shipping
+                    </div>
+                  </div>
+                </div>
+                <div class="delivery-option">
+                  <input type="radio" checked class="delivery-option-input"
+                    name="delivery-option-${prodcut.id}">
+                  <div>
+                    <div class="delivery-option-date">
+                      Wednesday, June 15
+                    </div>
+                    <div class="delivery-option-price">
+                      $4.99 - Shipping
+                    </div>
+                  </div>
+                </div>
+                <div class="delivery-option">
+                  <input type="radio" class="delivery-option-input"
+                    name="delivery-option-${prodcut.id}">
+                  <div>
+                    <div class="delivery-option-date">
+                      Monday, June 13
+                    </div>
+                    <div class="delivery-option-price">
+                      $9.99 - Shipping
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>`
+  });
+ console.log(carthtml);
+  document.querySelector('.js-order-summary').innerHTML = carthtml;
+
+

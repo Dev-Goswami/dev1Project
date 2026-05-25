@@ -1,11 +1,10 @@
-import { products } from "./products.js";
-import {cart} from "./cart.js"
-
-
-
-let productHtml = '';
-products.forEach((product)=>{
-    productHtml += ` <div class="product-container">
+import { products } from "../data/products.js";
+import { fixmoneyDesimal } from "./money.js";
+import { addToCart } from "../data/cart.js";
+console.log("amazon.js is concepted");
+let productHtml = "";
+products.forEach((product) => {
+  productHtml += `<div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
               src="${product.image}">
@@ -24,11 +23,11 @@ products.forEach((product)=>{
           </div>
 
           <div class="product-price">
-            ${product.priceCents/100}
+            ${fixmoneyDesimal(product.priceCents)}
           </div>
 
           <div class="product-quantity-container">
-            <select>
+            <select class="js-select-product-quntity">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -53,36 +52,24 @@ products.forEach((product)=>{
             Add to Cart
           </button>
         </div>`;
-        
-        
-
-
-
-});
-document.querySelector('.js-products-grid').innerHTML = productHtml;
-
-document.querySelectorAll('.js-add-to-card').forEach((btn)=>{
-    
-    btn.addEventListener('click',()=>{
-         const productId = btn.dataset.productId;
-         let itamPerset;
-       
-         cart.forEach((itam)=>{
-            if(itam.id===productId){
-                itamPerset = itam;
-            }
-         });
-
-         if(itamPerset){
-            itamPerset.quantity++;
-         }
-         else{
-            cart.push({id:productId,
-                       quantity : 1});
-         }
-     console.log(cart);
-    });
-    
-   
 });
 
+// here we generate html for product
+document.querySelector(".js-products-grid").innerHTML = productHtml;
+
+// now add to cart button is work
+
+document.querySelectorAll(".js-add-to-card").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const productId = btn.dataset.productId;
+    let selectedValue = 1;
+    const productContainer = btn.closest(".product-container");
+    const selectedQuntity = productContainer.querySelector(
+      ".js-select-product-quntity",
+    );
+    if (selectedQuntity) selectedValue = Number(selectedQuntity.value);
+
+    addToCart(productId, selectedValue); //add prodcut into cart  with quantity localy
+    
+  });
+});

@@ -1,8 +1,11 @@
-import { products } from "../../data/products.js";
+import { products ,loadProducts} from "../../data/products.js";
 import { fixmoneyDesimal } from "../../utils/money.js";
 import { addToCart, cart,totalCartItem} from "../../data/cart.js";
 import '../../utils/bootstrap.js';
 //show currrent cart's item quantity 
+
+function renderProduct(){
+
 document.querySelector('.total-items-in-cart').innerText = totalCartItem();
 
 let productHtml = "";
@@ -63,11 +66,15 @@ document.querySelector(".js-products-grid").innerHTML = productHtml;
 
 document
   .querySelector(".js-products-grid")
-  .addEventListener("click", (event) => {
+  .addEventListener("click",homePageClickEvent);
+}
+
+renderProduct();
+  function homePageClickEvent(event){
     //if i click on add to cart button then this capture 
     const addToCartBtn = event.target.closest(".js-add-to-card");
 
-    if  (addToCartBtn) {
+    if(addToCartBtn) {
       const productId = addToCartBtn.dataset.productId;
       let selectedValue = 1;
       const productContainer = addToCartBtn.closest(".product-container");
@@ -78,4 +85,4 @@ document
       addToCart(productId, selectedValue); //add prodcut into cart  with quantity localy
       document.querySelector('.total-items-in-cart').innerText = totalCartItem();
     }
-  });
+  }

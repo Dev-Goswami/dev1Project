@@ -1,3 +1,20 @@
+let backP;
+
+export function loadProducts(fun){
+
+      const xhr =  new XMLHttpRequest();
+      xhr.addEventListener('load',()=>{
+        backP = (xhr.response);
+        console.log(backP);
+         fun();
+      });
+      xhr.open('GET','https://supersimplebackend.dev/products');
+      xhr.send();
+}
+
+
+
+
 export function getProduct(itemId) {
   const prodcut = products.find((P) => P.id === itemId);
   if (!prodcut) console.error("item is not founded");

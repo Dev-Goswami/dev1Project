@@ -4,6 +4,7 @@ import { addToCart, cart,totalCartItem} from "../../data/cart.js";
 import '../../utils/bootstrap.js';
 //show currrent cart's item quantity 
 
+loadProducts(renderProduct);
 function renderProduct(){
 
 document.querySelector('.total-items-in-cart').innerText = totalCartItem();
@@ -69,8 +70,7 @@ document
   .addEventListener("click",homePageClickEvent);
 }
 
-renderProduct();
-  function homePageClickEvent(event){
+function homePageClickEvent(event){
     //if i click on add to cart button then this capture 
     const addToCartBtn = event.target.closest(".js-add-to-card");
 
@@ -85,4 +85,4 @@ renderProduct();
       addToCart(productId, selectedValue); //add prodcut into cart  with quantity localy
       document.querySelector('.total-items-in-cart').innerText = totalCartItem();
     }
-  }
+}

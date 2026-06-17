@@ -1,33 +1,26 @@
 import { loadCart, addToCart, cart } from "../../../data/cart.js";
 
+function creatMock(){
+  let data = {};
+  return {
+      getItem: (key) => data[key] || null,
+      setItem: (key, value) => {
+        data[key] = value;
+      }
+  }
+}
 
-let mockStorage = {};
-
-// wirte a fack methods
-const localStorageMock = {
-  getItem: (key) => mockStorage[key] || null,
-  setItem: (key, value) => {
-    mockStorage[key] = value;
-  },
-};
-
-// // Overwrite the global before importing your module
-Object.defineProperty(window, "localStorage", {
-  value: localStorageMock,
-  writable: true,
-});
-loadCart(mockStorage);
-
-
+let mockStorage ={};
 describe("test suite for add_to_cart function ", () => {
   //it run every before every it statements
   
   beforeEach(() => {
    
-    cart.length = 0;
-    mockStorage = {}; //reset mockstorage every time how it empty
-
-    spyOn(window.localStorage, "setItem").and.callThrough();
+     
+    mockStorage = creatMock(); //reset mockstorage every time how it empty
+     loadCart(mockStorage);
+      cart.length = 0;
+     spyOn(mockStorage, "setItem");
   });
 
   it("add new item into cart and also check defult quantity is work", () => {
@@ -63,7 +56,7 @@ describe("test suite for add_to_cart function ", () => {
     addToCart(productId, 8);
     
     expect(cart.length).toBe(1);
-    expect(localStorage.setItem).toHaveBeenCalled();
+    expect(mockStorage.setItem).toHaveBeenCalled();
     expect(cart[0]).toEqual({
       id: productId,
       quantity: 8,

@@ -1,10 +1,8 @@
 
-class Product{
-  id;
-  name;
 
-}
+
 export let products =[];
+
 export function loadProductFatch(){
   return fetch('https://supersimplebackend.dev/products')
   .then((response)=>{
@@ -16,21 +14,7 @@ export function loadProductFatch(){
   });//end of promoses
   
 }
-// export function loadProducts(fun){
 
-//       const xhr =  new XMLHttpRequest();
-//       xhr.addEventListener('load',()=>{
-//         products = JSON.parse(xhr.response);
-//         // console.log(backP);
-//         if(typeof fun ==='function'){
-//           fun();
-//         }
-         
-//       });
-//       xhr.open('GET','https://supersimplebackend.dev/products');
-//       xhr.send();
-// }
-// loadProducts();
 
 
 export function getProduct(itemId) {

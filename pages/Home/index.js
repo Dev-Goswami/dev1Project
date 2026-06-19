@@ -16,7 +16,7 @@ loadProductFatch().then(() => {
 
 function renderProduct() {
    const total = totalCartItem(); 
-  renderHeader(total);
+  
 
   let productHtml = "";
   products.forEach((product) => {

@@ -1,5 +1,6 @@
 import { cart, totalCartItem } from "../../data/cart.js";
 import { getDliveryOptions } from "../../data/deliveryOptions.js";
+import { creatOrder } from "../../data/orders.js";
 import { getProduct } from "../../data/products.js";
 import { fixmoneyDesimal } from "../../utils/money.js";
 
@@ -62,30 +63,42 @@ export function UpdatePaymentSummry() {
   ).innerHTML = paymmentSummaryHTML);
   document.querySelector(".total-items-in-cart").innerText = total;
 
-  document
-    .querySelector(".js-place-order-button")
-    .addEventListener("click", async () => {
-      window.location.href = "orders.html";
-      try {
-        const response = await fetch("https://supersimplebackend.dev/orders", {
-          method: "POST", // Changed to uppercase "POST" for standard convention
-          headers: {
-            "Content-Type": "application/json",
-          },
-          // Changed "Cart" to "cart" to match the expected API parameter
-          body: JSON.stringify({ cart: cart }),
-        });
-
-        if (!response.ok) {
-          throw new Error(`Response status: ${response.status}`);
-        }
-
-        const order = await response.json();
-      } catch (error) {
-        console.error("Unexpected Error:", error);
-      }
-    });
   // document
+  //   .querySelector(".js-place-order-button")
+  //   .addEventListener("click", async () => {
+  //     window.location.href = "orders.html";
+  //     try {
+  //       const response = await fetch("https://supersimplebackend.dev/orders", {
+  //         method: "POST", // Changed to uppercase "POST" for standard convention
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         // Changed "Cart" to "cart" to match the expected API parameter
+  //         body: JSON.stringify({ cart: cart }),
+  //       });
+
+  //       if (!response.ok) {
+  //         throw new Error(`Response status: ${response.status}`);
+  //       }
+
+  //       const order = await response.json();
+  //     } catch (error) {
+  //       console.error("Unexpected Error:", error);
+  //     }
+  //   });
+    document
+    .querySelector(".js-place-order-button")
+    .addEventListener('click',()=>{
+      if(cart.length>0){
+        creatOrder();
+      window.location.href = 'orders.html';
+      }
+      else{
+        alert('your cart is empty');
+      }
+      
+    });
+  
   //   .querySelector(".js-place-order-button")
   //   .addEventListener("click", async () => {
   //     try {

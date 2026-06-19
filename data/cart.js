@@ -1,21 +1,28 @@
-
-
 let _storage = null;
-export let cart =[];
+export let cart = [];
 export function loadCart(storageEngin) {
   _storage = storageEngin;
   cart = JSON.parse(_storage.getItem("cart")) || [];
+
+  
 }
+
 
 export function saveIntoLocal() {
   assertInitialized();
   _storage.setItem("cart", JSON.stringify(cart));
 }
+export function clearCart() {
+  loadCart(localStorage);
+  cart.length = 0;
+  saveIntoLocal();
+
+}
 
 function assertInitialized() {
   if (!_storage) {
     throw new Error(
-      "[Cart] Not initialized. Call loadCart(storage) before using cart."
+      "[Cart] Not initialized. Call loadCart(storage) before using cart.",
     );
   }
 }

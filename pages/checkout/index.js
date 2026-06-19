@@ -5,7 +5,7 @@ import { getCartItem } from "../../data/cart.js";
 import "../../utils/bootstrap.js";
 import { renderHeader } from "../../utils/header.js";
 
-renderHeader(getCartItem());
+// renderHeader(getCartItem());
 loadProductFatch().then(() => {
   updateOrderSummary();
 

@@ -1,14 +1,19 @@
 import { totalCartItem } from "../data/cart.js";
 
 export function renderHeader() {
-  
   const headerHtml = `
      <div class="amazon-header-left-section">
-        <a href="amazon.html" class="header-link">
-          <img class="amazon-logo"
-            src="images/amazon-logo-white.png">
-          <img class="amazon-mobile-logo"
-            src="images/amazon-mobile-logo-white.png">
+        <a href="index.html" class="header-link">
+        <div class="logoImageContainer">
+        <img class="amazon-logo"
+           src="images/apniDukaan-logo.png">
+           <span class='logoText'>Apni Dukaan</span>
+       
+        </div>
+          
+
+         
+            
         </a>
       </div>
 
@@ -27,13 +32,12 @@ export function renderHeader() {
         </a>
 
         <a class="cart-link header-link" href="checkout.html">
-          <img class="cart-icon" src="images/icons/cart-icon.png">
+         <i class="fa-solid cart-icon fa-cart-shopping"></i>
           <div class="cart-quantity total-items-in-cart">${totalCartItem()}</div>
   
           <div class="cart-text">Cart</div>
         </a>
       </div>`;
 
-  return  headerHtml;
-
+  return headerHtml;
 }

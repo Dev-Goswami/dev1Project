@@ -9,6 +9,8 @@
      margin-right auto;
      Is a trick for centering an element horizontally
      without needing a container. */
+     border: 1px solid green;
+    
   margin-left: auto;
   margin-right: auto;
 }
@@ -77,5 +79,89 @@
   height: 100%;
   background-color: green;
   border-radius: 50px;
-  width: 50%;
+  width: 80%;
+}
+
+
+.delivery-progress {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.progress-line {
+  position: relative;
+  height: 10px;
+  width: 100%;
+  background: #e5e7eb;
+  border-radius: 20px;
+  overflow: hidden;
+
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 20%;
+  background: linear-gradient(
+    90deg,
+    #00c853,
+    #00e676,
+    #00c853
+  );
+  background-size: 200% 100%;
+  width: 0;
+  /* transition: width 3s ease; */
+  --target-width: 50%;
+  animation:progressMove 3s ease forwards,
+    shine 1.5s linear infinite;
+  box-shadow: 0 0 15px rgba(0, 200, 83, 0.6);
+}
+
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.step {
+  text-align: center;
+  font-size: 14px;
+  color: #777;
+}
+
+.circle {
+  width: 18px;
+  height: 18px;
+  margin: 0 auto 8px;
+  border-radius: 50%;
+  background: #d1d5db;
+  transition: 0.3s;
+}
+
+.step.active .circle {
+  background: #00c853;
+  box-shadow: 0 0 12px rgba(0, 200, 83, 0.7);
+}
+
+.step.active span {
+  color: #00a63e;
+  font-weight: 600;
+}
+
+@keyframes progressMove {
+  from {
+    width: 0;
+  }
+  to {
+    width: var(--target-width); /* Change according to progress */
+  }
+}
+
+@keyframes shine {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 200% 0%;
+  }
 }

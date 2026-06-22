@@ -14,6 +14,7 @@ export function renderHeader() {
       </div>
 
       <div class="amazon-header-middle-section">
+      
         <input class="search-bar" type="text" placeholder="Search">
 
         <button class="search-button">

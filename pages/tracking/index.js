@@ -63,18 +63,55 @@ function renderTrackingProdcut() {
           src="${product.image}"
         />
 
-        <div class="progress-labels-container">
-          <div class="progress-label">Preparing</div>
-          <div class="progress-label current-status">Shipped</div>
-          <div class="progress-label">Delivered</div>
-        </div>
+        <div class="delivery-progress">
+          <div class="progress-line">
+            <div class="progress-fill"></div>
+          </div>
 
-        <div class="progress-bar-container">
-          <div class="progress-bar"></div>
-        </div>`;
+          <div class="progress-steps">
+
+            <div class="step active">
+              <div class="circle"></div>
+              <span>Ordered</span>
+            </div>
+
+            <div class="step js-shipped">
+              <div class="circle"></div>
+              <span>Shipped</span>
+            </div>
+
+            <div class="step js-out-for-delivery">
+              <div class="circle"></div>
+              <span>Out for Delivery</span>
+            </div>
+
+            <div class="step js-delivered">
+              <div class="circle"></div>
+              <span>Delivered</span>
+            </div>
+  </div>
+</div>`;
 
   document.querySelector(".js-order-tracking-product-detail").innerHTML =trackingProductHtml;
     
-  document.querySelector(".progress-bar").style.width =
-    `${calculateProgressTime(order.orderTime, orderProduct.arrivingdate)}%`;
+ const howMuchProgess = calculateProgressTime(order.orderTime, orderProduct.arrivingdate);
+ let progess =  document.querySelector(".progress-fill");
+ progess.style.setProperty(
+  '--target-width',
+  `${howMuchProgess}%`
+);
+  // progess.style.width =`${howMuchProgess}%`;
+
+ if(howMuchProgess>=33){
+   const shipped = document.querySelector('.js-shipped');
+   shipped.classList.add('active');
+ }
+ if(howMuchProgess>=65){
+  const outForDelivery = document.querySelector('.js-out-for-delivery');
+   outForDelivery.classList.add('active');
+ }
+ if(howMuchProgess>98){
+const delivered = document.querySelector('.js-delivered');
+   delivered.classList.add('active');
+ }
 }

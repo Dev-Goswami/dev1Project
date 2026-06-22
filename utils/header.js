@@ -5,15 +5,11 @@ export function renderHeader() {
      <div class="amazon-header-left-section">
         <a href="index.html" class="header-link">
         <div class="logoImageContainer">
-        <img class="amazon-logo"
+          <img class="amazon-logo"
            src="images/apniDukaan-logo.png">
            <span class='logoText'>Apni Dukaan</span>
-       
         </div>
-          
-
-         
-            
+     
         </a>
       </div>
 
